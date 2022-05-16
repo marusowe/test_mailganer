@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3>Список сообщений</h3>
+    <table id="table" class="table table-striped nowrap">
+        <caption>Выбрать подписчиков</caption>
+        <thead>
+        <tr>
+            <th scope="col">Почта</th>
+            <th scope="col">Шаблон</th>
+            <th scope="col">Отправлен</th>
+            <th scope="col">Прочитан</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for mail in email_delivery %}
+            <tr style="cursor: pointer">
+                <td>{{ mail.subscriber.email }}</td>
+                <td>{{ mail.email_template.name }}</td>
+                <td>{% if mail.is_send %}Отправлен{% else %}Ожидает отправки{% endif %}</td>
+                <td>{% if mail.is_open %}Прочитан{% else %}Не прочитан{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+            let table = $('#table').DataTable();
+        });
+    </script>
+{% endblock %}
